@@ -12,11 +12,48 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var light: UIImageView?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // A window is a view, a container for a single view
+        window = UIWindow()
+        window?.rootViewController = ViewController()
+        window?.rootViewController?.view.backgroundColor = UIColor.brown
+        window?.makeKeyAndVisible()
+        
+        light = UIImageView()
+        light?.frame = CGRect(x: 20.0, y: 20.0, width: 300.0, height: 350.0)
+        light?.backgroundColor = UIColor.red
+        light?.image = UIImage(named:"light_off")
+        window?.rootViewController?.view.addSubview(light!)
+        
+        // Because the switch was added later, it will be on top of the light
+        let lightSwitch: UISwitch = UISwitch()
+        lightSwitch.frame = CGRect(x: 50.0, y: 300.0, width: 200.0, height: 200.0)
+        lightSwitch.addTarget(self, action: "buttonPressed", for: UIControlEvents.touchUpInside)
+        window?.rootViewController?.view.addSubview(lightSwitch)
+        
+        NSLog("Hello World")
+        
         return true
+    }
+    
+    func buttonPressed()
+    {
+        // Change the image of the light
+        if (light?.image == #imageLiteral(resourceName: "light_off"))
+        {
+            light?.image = UIImage(named: "light_on")
+        }
+        else
+        {
+           light?.image = UIImage(named: "light_off")
+        }
+        
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
